@@ -8,4 +8,6 @@ const getHomeView = (_request, response) => {
         menuLinks: MENU_LINKS,
       });
 };
-module.exports = getHomeView;
+module.exports = {
+  getHomeView,
+};

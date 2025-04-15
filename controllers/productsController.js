@@ -46,14 +46,36 @@ const getNewProductView = (_request, response) => {
 
 const getProductView = (_request, response) => {
     const { name } = _request.params;
-    const foundProduct = Product.findByName();
+    const foundProduct = Product.findByName(name);
     if(!foundProduct){
         return response.status(STATUS_CODE.NOT_FOUND).send("Can't find the product");
     }
 
     response.render("product.ejs", {
         headTitle: `Shop - ${foundProduct.name}`,
+        activeLinkPath: "/products",
         product: foundProduct,
         menuLinks: MENU_LINKS,
       });
 };
+
+const deleteProduct = (_request, response) => {
+    const { name } = _request.params;
+    const deleted = Product.deleteByName(name);
+
+    if(deleted){
+        return response.status(STATUS_CODE.OK).json({success: true});
+    }else{
+        return response.status(STATUS_CODE.NOT_FOUND).json({success: false, message: "Product not found"});
+    }
+};
+
+module.exports = {
+    getProductsView,
+    getAddProductsView,
+    addNewProduct,
+    getNewProductView,
+    getProductView,
+    deleteProduct,
+};
+
