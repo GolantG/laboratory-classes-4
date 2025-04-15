@@ -1,12 +1,8 @@
 const express = require("express");
-
-const logger = require("../utils/logger");
+const { killAplication } = require(`../controllers/logoutController`);
 
 const router = express.Router();
 
-router.get("/", () => {
-  logger.getProcessLog();
-  process.exit();
-});
+router.get("/", killAplication);
 
 module.exports = router;
